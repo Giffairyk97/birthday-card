@@ -5,37 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HBD Special Card</title>
     <style>
+        /* สไตล์พื้นหลังและตัวอักษร */
         body { 
             margin: 0; 
-            background: #0b0d17; 
-            color: #d4af37; 
+            background: #0b101b; /* สีน้ำเงินเข้ม */
+            color: #ffffff; /* สีขาว */
             font-family: 'serif'; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            height: 100vh; 
+            min-height: 100vh;
+            flex-direction: column;
+            padding: 20px;
         }
+        /* สไตล์กล่องการ์ด */
         .card { 
             text-align: center; 
             padding: 40px; 
-            border: 1px solid #d4af37; 
-            border-radius: 15px; 
-            background: rgba(255,255,255,0.02); 
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            border: 2px solid #d4af37; /* สีทอง */
+            border-radius: 25px; 
+            background: rgba(255,255,255,0.03); /* โปร่งแสงเล็กน้อย */
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
         }
-        h1 { font-size: 2rem; letter-spacing: 2px; }
-        p { color: white; opacity: 0.8; line-height: 1.8; }
+        .card:hover {
+            transform: translateY(-5px); /* เอฟเฟกต์ลอยตัวเมื่อเอาเมาส์วาง */
+        }
+        /* สไตล์รูปภาพ */
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid #d4af37;
+            margin-bottom: 25px;
+            object-fit: cover; /* ให้รูปไม่เบี้ยว */
+            box-shadow: 0 5px 15px rgba(212,175,55,0.3);
+        }
+        /* สไตล์หัวข้อ */
+        h1 { 
+            color: #d4af37; /* สีทอง */
+            font-size: 2.2rem; 
+            margin: 15px 0; 
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        /* สไตล์ข้อความอวยพร */
+        p { 
+            color: #ffffff; 
+            opacity: 0.9; 
+            font-size: 1.1rem;
+            line-height: 1.8; 
+            margin-bottom: 30px;
+        }
+        /* สไตล์เครื่องเล่นเพลง */
+        audio { 
+            margin-top: 25px; 
+            width: 100%; 
+            height: 35px; 
+            outline: none;
+        }
+        /* ปรับสไตล์สำหรับหน้าจอมือถือเล็ก */
+        @media (max-width: 400px) {
+            .card { padding: 30px; }
+            h1 { font-size: 1.8rem; }
+            .profile-img { width: 150px; height: 150px; }
+        }
     </style>
 </head>
 <body>
+
     <div class="card">
-        <h1>Happy Birthday, my dear friend ᯓ Σ𝙉𝙕𝙊‡ ✈︎</h1>
-        <p>ขอให้ปีนี้เป็นปีที่เต็มไปด้วยความสุข<br>และเรื่องราวที่สวยงามนะครับ</p>
+        <img src="1774201822316.jpg" alt="Birthday Person" class="profile-img">
+        
+        <h1>Happy Birthday "ENZO"</h1>
+        <p>ขอให้ปีนี้เป็นปีที่เต็มไปด้วยความสุข<br>เจริญก้าวหน้าตามที่หวัง<br>และเรื่องราวดีๆในทุกๆวันนะครับ</p>
+
+        <audio controls autoplay loop>
+            <source src="WWJ - คำอวยพร (Happy Birthday) [Official Audio].mp3" type="audio/mpeg">
+        </audio>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
+        // ทำงานเมื่อโหลดหน้าเว็บเสร็จ
         window.onload = () => {
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#d4af37', '#ffffff'] });
+            // เรียกใช้พลุ
+            confetti({ 
+                particleCount: 180, // จำนวนชิ้นพลุ
+                spread: 80, // ความกว้างของการกระจาย
+                origin: { y: 0.6 }, // จุดกำเนิดพลุ (0.6 คือประมาณช่วงล่างของหน้าจอ)
+                colors: ['#d4af37', '#ffffff', '#ffd700'] // สีของพลุ (ทอง, ขาว, เหลืองทอง)
+            });
         };
     </script>
 </body>
