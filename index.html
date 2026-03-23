@@ -6,10 +6,10 @@
     <title>HBD Special Card for So</title>
     <style>
         :root {
-            --bg: #f4f1ea; 
-            --accent: #8d6e63; 
+            --bg: #fdfaf1; 
             --gold: #b89b5e; 
-            --text: #3e2723; 
+            --accent: #5d4037;
+            --text: #3e2723;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -17,8 +17,8 @@
             margin: 0; 
             background: var(--bg); 
             color: var(--text); 
-            font-family: 'serif'; 
-            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            font-family: 'Georgia', serif; 
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
             overflow-x: hidden;
         }
 
@@ -28,123 +28,71 @@
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
-            padding: 40px 20px;
+            padding: 60px 20px;
             position: relative;
         }
 
-        /* 1. การ์ดสมุดโบราณ - แก้ไขให้เปิดง่ายขึ้น */
-        .book {
-            width: 280px;
-            height: 380px;
-            position: relative;
-            perspective: 1500px;
-            z-index: 10;
-        }
-        .book-cover {
+        /* ลูกศรวิจิตร */
+        .scroll-down {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #5d4037;
+            bottom: 30px;
+            font-size: 24px;
             color: var(--gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            border-radius: 5px 15px 15px 5px;
-            transform-origin: left;
-            transition: transform 1s ease;
-            z-index: 5;
-            box-shadow: 10px 10px 20px rgba(0,0,0,0.3);
-            border: 4px double var(--gold);
-            text-align: center;
-            padding: 20px;
-            backface-visibility: hidden;
+            animation: bounce 2s infinite;
         }
-        .book.open .book-cover { transform: rotateY(-150deg); }
+        .scroll-down::before { content: "❧ เลื่อนลง ❧"; font-style: italic; font-size: 14px; display: block; text-align: center; }
+
+        /* 1. สมุดบันทึกโบราณ */
+        .book { width: 300px; height: 400px; position: relative; perspective: 1500px; z-index: 10; }
+        .book-cover {
+            position: absolute; width: 100%; height: 100%;
+            background: #4e342e; color: var(--gold);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; border-radius: 5px 15px 15px 5px;
+            transform-origin: left; transition: transform 1.2s;
+            z-index: 5; border: 5px double var(--gold);
+            text-align: center; padding: 25px; box-shadow: 15px 15px 30px rgba(0,0,0,0.4);
+        }
+        .book.open .book-cover { transform: rotateY(-160deg); }
         .book-content {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #fffdf9;
-            padding: 25px;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            line-height: 1.8;
-            font-size: 1rem;
-            border: 1px solid #e0dcd0;
-            z-index: 1;
+            position: absolute; width: 100%; height: 100%;
+            background: #fffdf9; padding: 30px; border-radius: 5px;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; line-height: 1.8; font-size: 1.1rem;
+            border: 1px solid #e0dcd0; box-shadow: inset 0 0 50px rgba(0,0,0,0.05);
         }
 
-        /* 2. Gallery */
+        /* 2. Gallery 7 รูป กรอบหรูยุคกลาง */
+        .gallery-container { width: 100%; max-width: 500px; display: flex; flex-direction: column; align-items: center; }
         .photo-frame {
-            width: 100%;
-            max-width: 450px;
-            margin: 15px 0;
-            border: 10px solid white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            width: 90%; margin: 30px 0;
+            border: 15px solid #fff;
+            outline: 2px solid var(--gold);
+            outline-offset: -10px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            background: white;
+            transition: 0.3s;
         }
         .photo-frame img { width: 100%; height: auto; display: block; }
+        /* เอียงสลับกัน */
+        .photo-frame:nth-child(odd) { transform: rotate(-3deg); }
+        .photo-frame:nth-child(even) { transform: rotate(3deg); }
 
-        /* 3. บลูเบอร์รี่ชีสพาย - ทรงสามเหลี่ยม */
-        .pie-slice {
-            width: 0; height: 0;
-            border-left: 100px solid transparent;
-            border-right: 100px solid transparent;
-            border-bottom: 150px solid #fdfdfd; /* เนื้อเค้ก */
-            position: relative;
-            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
-        }
-        .pie-slice::after {
-            content: '';
-            position: absolute;
-            top: 140px; left: -100px;
-            width: 200px; height: 20px;
-            background: #c4a484; /* แครกเกอร์ */
-            border-radius: 0 0 10px 10px;
-        }
-        .blueberry-sauce {
-            position: absolute;
-            top: 80px; left: -40px;
-            width: 80px; height: 40px;
-            background: #311b92;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #311b92;
+        /* 3. เค้ก Emoji 🎂 */
+        .cake-box { font-size: 150px; position: relative; cursor: pointer; user-select: none; }
+        .candle-emoji { 
+            position: absolute; font-size: 40px; 
+            top: -20px; display: none; 
+            filter: drop-shadow(0 0 10px orange);
         }
 
-        /* เทียน */
-        .candle {
-            position: absolute;
-            top: 50px; left: -5px;
-            width: 10px; height: 45px;
-            background: #ffeb3b;
-            z-index: 20;
-            display: none;
-        }
-        .flame {
-            width: 12px; height: 18px;
-            background: orange;
-            border-radius: 50%;
-            position: absolute;
-            top: -15px; left: -1px;
-            box-shadow: 0 0 15px orange;
-        }
+        /* 4. กล่องของขวัญยักษ์ 🎁 */
+        .gift-giant { font-size: 180px; cursor: pointer; transition: 0.5s; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2)); }
+        .qr-area { display: none; animation: fadeIn 1.5s; text-align: center; }
+        .qr-area img { width: 250px; border: 10px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
 
-        /* 4. กล่องของขวัญ */
-        .qr-area { display: none; margin-top: 20px; text-align: center; }
-        .qr-area img { width: 220px; border: 8px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-
-        .btn {
-            margin-top: 20px;
-            padding: 10px 20px;
-            border: 1px solid var(--gold);
-            background: white;
-            cursor: pointer;
-        }
-
-        .scroll-hint { margin-top: 20px; font-size: 0.8rem; opacity: 0.6; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+        @keyframes fadeIn { from {opacity: 0; transform: scale(0.8);} to {opacity: 1; transform: scale(1);} }
     </style>
 </head>
 <body>
@@ -154,66 +102,81 @@
     </audio>
 
     <section>
-        <div class="book" id="myBook" onclick="toggleBook()">
-            <div class="book-cover">A Message for <br>Someone Special</div>
+        <div class="book" id="myBook" onclick="openBook()">
+            <div class="book-cover">❧ B.Day Journal ☙<br><small>Touch to open</small></div>
             <div class="book-content">
-                <p>สุขสันต์วันเกิดนะคุณโซ่ เราเป็นเพื่อนกันมาครบ 1 ปีแล้ว ผ่านอะไรด้วยกันมาเยอะมากจริงๆ ขอบคุณที่อยู่ตรงนีนะ ผมอยากให้คุณรู้ว่า ไม่ว่าจะเกิดอะไรขึ้น ผมก็ยังเป็นทีมเดียวกับคุณเสมอครับ -เซบ-</p>
+                <p>สุขสันต์วันเกิดนะคุณโซ่ เราเป็นเพื่อนกันมาครบ 1 ปีแล้ว ผ่านอะไรด้วยกันมาเยอะมากจริงๆ ขอบคุณที่อยู่ตรงนี้นะ ผมอยากให้คุณรู้ว่า ไม่ว่าจะเกิดอะไรขึ้น ผมก็ยังเป็นทีมเดียวกับคุณเสมอครับ -เซบ-</p>
             </div>
         </div>
-        <p class="scroll-hint">แตะที่หน้าปกเพื่อเปิดอ่าน</p>
+        <div class="scroll-down">❦</div>
     </section>
 
     <section>
-        <div class="photo-frame"><img src="1774201822316.jpg"></div>
-        <div class="photo-frame"><img src="photo2.jpg"></div>
-        <div class="photo-frame"><img src="photo3.jpg"></div>
-    </section>
-
-    <section>
-        <div class="pie-slice">
-            <div class="blueberry-sauce"></div>
-            <div id="candle" class="candle" onclick="blowCandle()">
-                <div id="flame" class="flame"></div>
-            </div>
+        <div class="gallery-container">
+            <div class="photo-frame"><img src="1774201822316.jpg"></div>
+            <div class="photo-frame"><img src="photo2.jpg"></div>
+            <div class="photo-frame"><img src="photo3.jpg"></div>
+            <div class="photo-frame"><img src="photo4.jpg"></div>
+            <div class="photo-frame"><img src="photo5.jpg"></div>
+            <div class="photo-frame"><img src="photo6.jpg"></div>
+            <div class="photo-frame"><img src="photo7.jpg"></div>
         </div>
-        <button class="btn" id="btnCandle" onclick="showCandle()">ปักเทียน 🕯️</button>
-        <p class="scroll-hint">อธิฐานแล้ว "แตะที่ไฟ" เพื่อเป่านะครับ</p>
+        <div class="scroll-down" style="position: static; margin-top: 50px;">❦</div>
     </section>
 
     <section>
-        <div id="gift" onclick="revealGift()" style="cursor:pointer; text-align:center;">
-            <div style="font-size: 80px;">🎁</div>
-            <p>แตะที่กล่องของขวัญ</p>
+        <div class="cake-box" id="cakeContainer">
+            🎂
+            <div id="c1" class="candle-emoji" style="left: 20px;">🕯️</div>
+            <div id="c2" class="candle-emoji" style="left: 60px; top: -40px;">🕯️</div>
+            <div id="c3" class="candle-emoji" style="left: 100px;">🕯️</div>
         </div>
+        <button id="btnCandle" onclick="addCandles()" style="margin-top:40px; padding:15px 30px; border:2px solid var(--gold); background:none; color:var(--accent); font-weight:bold; cursor:pointer;">❧ ปักเทียนวันเกิด ❧</button>
+        <p id="wishText" style="display:none; margin-top:20px; font-style:italic;">หลับตาอธิษฐานแล้วแตะที่เค้กเพื่อเป่าเทียนนะ...</p>
+        <div class="scroll-down">❦</div>
+    </section>
+
+    <section>
+        <div id="giftGiant" class="gift-giant" onclick="revealGift()">🎁</div>
         <div id="qrArea" class="qr-area">
-            <img src="qr-code.jpg" alt="QR Code">
-            <p>ของขวัญสำหรับคุณโซ่ครับ</p>
+            <img src="qr-code.jpg" alt="Gift QR">
+            <p style="margin-top:20px; font-weight:bold; color:var(--accent);">❧ พิเศษสำหรับคุณโซ่ ❧</p>
         </div>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
-        function toggleBook() {
-            document.getElementById('myBook').classList.toggle('open');
+        function openBook() {
+            document.getElementById('myBook').classList.add('open');
             document.getElementById('bgMusic').play();
-            confetti({ particleCount: 50, origin: { y: 0.7 } });
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.7 } });
         }
 
-        function showCandle() {
-            document.getElementById('candle').style.display = 'block';
+        function addCandles() {
+            document.getElementById('c1').style.display = 'block';
+            document.getElementById('c2').style.display = 'block';
+            document.getElementById('c3').style.display = 'block';
             document.getElementById('btnCandle').style.display = 'none';
+            document.getElementById('wishText').style.display = 'block';
+            
+            // แตะที่เค้กเพื่อเป่า
+            document.getElementById('cakeContainer').onclick = function() {
+                blowOut();
+            };
         }
 
-        function blowCandle() {
-            document.getElementById('flame').style.visibility = 'hidden';
-            confetti({ particleCount: 150, spread: 70 });
-            setTimeout(() => { alert("ขอให้มีความสุขมากๆ นะครับ!"); }, 300);
+        function blowOut() {
+            document.getElementById('c1').style.opacity = '0.3';
+            document.getElementById('c2').style.opacity = '0.3';
+            document.getElementById('c3').style.opacity = '0.3';
+            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+            setTimeout(() => { alert("ขอให้สมปรารถนานะครับคุณโซ่ ✨"); }, 500);
         }
 
         function revealGift() {
-            document.getElementById('gift').style.display = 'none';
+            document.getElementById('giftGiant').style.display = 'none';
             document.getElementById('qrArea').style.display = 'block';
-            confetti({ particleCount: 200, spread: 100, colors: ['#b89b5e', '#ffffff'] });
+            confetti({ particleCount: 300, spread: 150, colors: ['#b89b5e', '#ffffff', '#5d4037'] });
         }
     </script>
 </body>
