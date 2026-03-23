@@ -17,9 +17,9 @@
             margin: 0; 
             background: var(--bg); 
             color: var(--text); 
-            font-family: 'Georgia', 'Palatino', serif; 
+            font-family: 'serif'; 
             background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
-            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         section { 
@@ -30,28 +30,15 @@
             justify-content: center; 
             padding: 40px 20px;
             position: relative;
-            overflow: hidden;
         }
 
-        /* ลวดลายกรอบอลังการ */
-        .border-deco {
-            position: absolute;
-            width: 90%;
-            height: 92%;
-            border: 2px solid var(--gold);
-            pointer-events: none;
-            opacity: 0.3;
-            z-index: 1;
-        }
-
-        /* 1. การ์ดสมุดโบราณ */
+        /* 1. การ์ดสมุดโบราณ - แก้ไขให้เปิดง่ายขึ้น */
         .book {
             width: 280px;
             height: 380px;
             position: relative;
             perspective: 1500px;
-            cursor: pointer;
-            z-index: 2;
+            z-index: 10;
         }
         .book-cover {
             position: absolute;
@@ -65,14 +52,15 @@
             font-size: 1.4rem;
             border-radius: 5px 15px 15px 5px;
             transform-origin: left;
-            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-            z-index: 3;
+            transition: transform 1s ease;
+            z-index: 5;
             box-shadow: 10px 10px 20px rgba(0,0,0,0.3);
             border: 4px double var(--gold);
             text-align: center;
             padding: 20px;
+            backface-visibility: hidden;
         }
-        .book.open .book-cover { transform: rotateY(-160deg); }
+        .book.open .book-cover { transform: rotateY(-150deg); }
         .book-content {
             position: absolute;
             width: 100%;
@@ -80,72 +68,83 @@
             background: #fffdf9;
             padding: 25px;
             border-radius: 5px;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             line-height: 1.8;
-            font-size: 0.95rem;
+            font-size: 1rem;
             border: 1px solid #e0dcd0;
+            z-index: 1;
         }
 
-        /* 2. กรอบรูปแนวนอน (Modern Classic) */
+        /* 2. Gallery */
         .photo-frame {
             width: 100%;
             max-width: 450px;
             margin: 15px 0;
-            border: 12px solid white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            background: white;
-            transform: rotate(var(--r));
+            border: 10px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        .photo-frame img {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: contain;
-        }
+        .photo-frame img { width: 100%; height: auto; display: block; }
 
-        /* 3. บลูเบอร์รี่ชีสพาย */
-        .pie-container { position: relative; height: 200px; display: flex; align-items: flex-end; }
-        .pie {
-            width: 220px;
-            height: 70px;
-            background: #fdfdfd; 
-            border-bottom: 18px solid #c4a484; 
-            border-radius: 50% / 20px;
+        /* 3. บลูเบอร์รี่ชีสพาย - ทรงสามเหลี่ยม */
+        .pie-slice {
+            width: 0; height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 150px solid #fdfdfd; /* เนื้อเค้ก */
             position: relative;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
         }
-        .topping {
+        .pie-slice::after {
+            content: '';
             position: absolute;
-            top: -12px;
-            width: 100%;
-            height: 40px;
-            background: #311b92; 
+            top: 140px; left: -100px;
+            width: 200px; height: 20px;
+            background: #c4a484; /* แครกเกอร์ */
+            border-radius: 0 0 10px 10px;
+        }
+        .blueberry-sauce {
+            position: absolute;
+            top: 80px; left: -40px;
+            width: 80px; height: 40px;
+            background: #311b92;
             border-radius: 50%;
-            box-shadow: inset 0 -5px 15px rgba(0,0,0,0.4);
+            box-shadow: 0 0 10px #311b92;
         }
 
-        /* 4. กล่องของขวัญ & QR */
-        .qr-area { display: none; margin-top: 20px; text-align: center; animation: fadeIn 1.2s forwards; }
+        /* เทียน */
+        .candle {
+            position: absolute;
+            top: 50px; left: -5px;
+            width: 10px; height: 45px;
+            background: #ffeb3b;
+            z-index: 20;
+            display: none;
+        }
+        .flame {
+            width: 12px; height: 18px;
+            background: orange;
+            border-radius: 50%;
+            position: absolute;
+            top: -15px; left: -1px;
+            box-shadow: 0 0 15px orange;
+        }
+
+        /* 4. กล่องของขวัญ */
+        .qr-area { display: none; margin-top: 20px; text-align: center; }
         .qr-area img { width: 220px; border: 8px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
-        .btn-gold {
-            margin-top: 30px;
-            padding: 12px 24px;
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
             border: 1px solid var(--gold);
-            background: transparent;
-            color: var(--text);
-            font-family: serif;
-            letter-spacing: 1px;
+            background: white;
             cursor: pointer;
-            border-radius: 4px;
         }
 
-        .scroll-hint { margin-top: 25px; font-size: 0.85rem; font-style: italic; opacity: 0.6; animation: fadeMove 2s infinite; }
-        @keyframes fadeMove { 0%, 100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(8px); } }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .scroll-hint { margin-top: 20px; font-size: 0.8rem; opacity: 0.6; }
     </style>
 </head>
 <body>
@@ -155,76 +154,67 @@
     </audio>
 
     <section>
-        <div class="border-deco"></div>
-        <div class="book" id="myBook" onclick="openBook()">
+        <div class="book" id="myBook" onclick="toggleBook()">
             <div class="book-cover">A Message for <br>Someone Special</div>
             <div class="book-content">
-                <p>สุขสันต์วันเกิดนะคุณโซ่ เราเป็นเพื่อนกันมาครบ 1 ปีแล้ว ผ่านอะไรด้วยกันมาเยอะมากจริงๆ ขอบคุณที่อยู่ตรงนี้นะ ผมอยากให้คุณรู้ว่า ไม่ว่าจะเกิดอะไรขึ้น ผมก็ยังเป็นทีมเดียวกับคุณเสมอครับ</p>
+                <p>สุขสันต์วันเกิดนะคุณโซ่ เราเป็นเพื่อนกันมาครบ 1 ปีแล้ว ผ่านอะไรด้วยกันมาเยอะมากจริงๆ ขอบคุณที่อยู่ตรงนีนะ ผมอยากให้คุณรู้ว่า ไม่ว่าจะเกิดอะไรขึ้น ผมก็ยังเป็นทีมเดียวกับคุณเสมอครับ -เซบ-</p>
             </div>
         </div>
-        <div class="scroll-hint">แตะเพื่อเปิดอ่าน และเลื่อนลงด้านล่าง</div>
-    </section>
-
-    <section style="background: #ece8df;">
-        <div class="photo-frame" style="--r: -2deg;"><img src="1774201822316.jpg"></div>
-        <div class="photo-frame" style="--r: 3deg;"><img src="photo2.jpg"></div>
-        <div class="photo-frame" style="--r: -1deg;"><img src="photo3.jpg"></div>
-        <div class="scroll-hint">Our precious memories...</div>
+        <p class="scroll-hint">แตะที่หน้าปกเพื่อเปิดอ่าน</p>
     </section>
 
     <section>
-        <h2 style="color: var(--accent); margin-bottom: 50px;">Blueberry Cheese Pie</h2>
-        <div class="pie-container">
-            <div class="pie">
-                <div class="topping"></div>
-                <div id="candle" onclick="lightCandle()" style="position:absolute; top:-45px; left:48%; cursor:pointer; display:none; z-index: 10;">
-                    <div style="width:8px; height:45px; background:linear-gradient(#fff, #eee); border:1px solid #ccc; border-radius:3px;"></div>
-                    <div id="flame" style="width:12px; height:18px; background:orange; border-radius:50%; position:absolute; top:-15px; left:-2px; box-shadow:0 0 15px orange; animation: flicker 0.1s infinite alternate;"></div>
-                </div>
-            </div>
-        </div>
-        <button class="btn-gold" id="candleBtn" onclick="document.getElementById('candle').style.display='block'; this.style.display='none'">ปักเทียนวันเกิด🕯️อธิษฐานซักหน่อยนะ</button>
-        <p class="scroll-hint">แตะที่เปลวไฟเพื่อเป่าเทียนนะครับ</p>
+        <div class="photo-frame"><img src="1774201822316.jpg"></div>
+        <div class="photo-frame"><img src="photo2.jpg"></div>
+        <div class="photo-frame"><img src="photo3.jpg"></div>
     </section>
 
-    <section style="background: #e5e0d5;">
-        <div id="gift" onclick="openGift()" style="text-align: center;">
-            <div style="font-size: 80px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2)); cursor: pointer;">🎁</div>
-            <p style="margin-top: 20px; letter-spacing: 1px;">แตะที่กล่องเพื่อแกะริบบิ้น</p>
+    <section>
+        <div class="pie-slice">
+            <div class="blueberry-sauce"></div>
+            <div id="candle" class="candle" onclick="blowCandle()">
+                <div id="flame" class="flame"></div>
+            </div>
+        </div>
+        <button class="btn" id="btnCandle" onclick="showCandle()">ปักเทียน 🕯️</button>
+        <p class="scroll-hint">อธิฐานแล้ว "แตะที่ไฟ" เพื่อเป่านะครับ</p>
+    </section>
+
+    <section>
+        <div id="gift" onclick="revealGift()" style="cursor:pointer; text-align:center;">
+            <div style="font-size: 80px;">🎁</div>
+            <p>แตะที่กล่องของขวัญ</p>
         </div>
         <div id="qrArea" class="qr-area">
-            <img src="qr-code.jpg" alt="QR Code Gift">
-            <p style="color: var(--accent); font-weight: bold; margin-top: 20px;">ของขวัญพิเศษสำหรับคุณโซ่ครับ</p>
+            <img src="qr-code.jpg" alt="QR Code">
+            <p>ของขวัญสำหรับคุณโซ่ครับ</p>
         </div>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
-        function openBook() {
-            document.getElementById('myBook').classList.add('open');
-            const audio = document.getElementById('bgMusic');
-            audio.play().catch(() => { console.log("Autoplay blocked"); });
-            confetti({ particleCount: 60, spread: 60, origin: { y: 0.7 }, colors: ['#b89b5e', '#ffffff'] });
+        function toggleBook() {
+            document.getElementById('myBook').classList.toggle('open');
+            document.getElementById('bgMusic').play();
+            confetti({ particleCount: 50, origin: { y: 0.7 } });
         }
 
-        function lightCandle() {
-            document.getElementById('flame').style.display = 'none';
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            setTimeout(() => { alert("ขอให้คำอธิษฐานของคุณเป็นจริงนะครับ!"); }, 500);
+        function showCandle() {
+            document.getElementById('candle').style.display = 'block';
+            document.getElementById('btnCandle').style.display = 'none';
         }
 
-        function openGift() {
+        function blowCandle() {
+            document.getElementById('flame').style.visibility = 'hidden';
+            confetti({ particleCount: 150, spread: 70 });
+            setTimeout(() => { alert("ขอให้มีความสุขมากๆ นะครับ!"); }, 300);
+        }
+
+        function revealGift() {
             document.getElementById('gift').style.display = 'none';
             document.getElementById('qrArea').style.display = 'block';
-            confetti({ 
-                particleCount: 200, 
-                spread: 100, 
-                origin: { y: 0.8 }, 
-                colors:['#b89b5e', '#8d6e63', '#ffffff'] 
-            });
+            confetti({ particleCount: 200, spread: 100, colors: ['#b89b5e', '#ffffff'] });
         }
-
-        @keyframes flicker { from { opacity: 0.8; transform: scale(1); } to { opacity: 1; transform: scale(1.1); } }
     </script>
 </body>
 </html>
